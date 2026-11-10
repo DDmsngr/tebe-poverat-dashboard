@@ -42,7 +42,7 @@ const validDate = (y: number, m: number, d: number) => {
   return dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d;
 };
 
-/** Разбор файла «Консультации»: вкладка на специалистку, строка клиента, колонки дней. */
+/** Разбор файла «Консультации»: вкладка на каждого специалиста, строка клиента, колонки дней. */
 export function parseConsultations(sheets: RawSheet[], year: number): Dataset {
   const cases: Case[] = [];
   const meetings: Meeting[] = [];
@@ -51,12 +51,12 @@ export function parseConsultations(sheets: RawSheet[], year: number): Dataset {
 
   for (const { sheet, data } of sheets) {
     const hr = data.findIndex((row) => str(row?.[1]) === 'Город');
-    if (hr < 0) continue; // не вкладка со специалисткой (например, «Пояснения»)
+    if (hr < 0) continue; // не вкладка со специалистом (например, «Пояснения»)
     sheetsUsed++;
 
     let specialist = sheet;
     for (const row of data.slice(0, hr)) {
-      const hit = (row ?? []).map(str).find((c) => /^специалистка/i.test(c));
+      const hit = (row ?? []).map(str).find((c) => /^специалист/i.test(c));
       if (hit) {
         specialist = hit;
         break;

@@ -26,15 +26,16 @@ export function Kpi({ label, value, sub, tone = 'brand' }: { label: string; valu
 }
 
 export function Select<T extends string>({
-  label, value, onChange, options,
-}: { label: string; value: T; onChange: (v: T) => void; options: { value: T; label: string }[] }) {
+  label, value, onChange, options, disabled,
+}: { label: string; value: T; onChange: (v: T) => void; options: { value: T; label: string }[]; disabled?: boolean }) {
   return (
     <label className="flex min-w-[9rem] flex-col gap-1 text-xs font-medium text-ink/60">
       {label}
       <select
         value={value}
+        disabled={disabled}
         onChange={(e) => onChange(e.target.value as T)}
-        className="rounded-full border border-brand/25 bg-white px-3 py-2 text-sm font-normal text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+        className="disabled:opacity-60 rounded-full border border-brand/25 bg-white px-3 py-2 text-sm font-normal text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>

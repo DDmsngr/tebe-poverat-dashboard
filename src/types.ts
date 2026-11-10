@@ -3,7 +3,7 @@ export type RegionGroup = 'capitals' | 'regions';
 export type CaseStatus = 'queue' | 'in_work' | 'done' | 'not_started';
 export type MeetingStatus = 'held' | 'cancel_client' | 'cancel_spec' | 'no_show';
 
-/** Случай: один клиент у одной специалистки (в CRM это сделка). */
+/** Случай: один клиент у одного специалиста (в CRM это сделка). */
 export interface Case {
   id: string;
   clientKey: string;
@@ -34,6 +34,7 @@ export interface Dataset {
   cases: Case[];
   meetings: Meeting[];
   warnings: string[];
+  edited?: boolean;
 }
 
 export interface Filters {

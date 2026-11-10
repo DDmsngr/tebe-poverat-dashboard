@@ -65,7 +65,7 @@ test('уникальные клиенты за период считаются �
   assert.equal(total.clients, 2);
 });
 
-test('фильтр специалистки не меняет обращения и очередь', () => {
+test('фильтр специалиста не меняет обращения и очередь', () => {
   const f: Filters = { ...all, specialist: 'A1' };
   const feb = monthly(ds, f)[1];
   assert.equal(feb.requests, 1);

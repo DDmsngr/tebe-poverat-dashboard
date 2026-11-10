@@ -29,8 +29,8 @@ export function daysBetween(a: string, b: string): number {
 
 const inRange = (d: string | null, from: string, to: string) => d !== null && d >= from && d <= to;
 
-/** Базовый набор: направление, проект, регион. Специалистка не применяется,
- *  потому что в момент обращения её ещё нет. */
+/** Базовый набор: направление, проект, регион. Фильтр по специалисту не применяется,
+ *  потому что в момент обращения его ещё нет. */
 function baseCases(ds: Dataset, f: Filters): Case[] {
   return ds.cases.filter(
     (c) =>

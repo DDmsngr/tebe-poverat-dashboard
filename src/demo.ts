@@ -13,8 +13,8 @@ function rng(seed: number) {
 export const addDays = (d: string, n: number) => new Date(Date.parse(d) + n * 86_400_000).toISOString().slice(0, 10);
 
 const SPECIALISTS: Record<Direction, string[]> = {
-  adult: ['Специалистка А1', 'Специалистка А2'],
-  detrod: ['Специалистка Д1', 'Специалистка Д2', 'Специалистка Д3'],
+  adult: ['Специалист А1', 'Специалист А2'],
+  detrod: ['Специалист Д1', 'Специалист Д2', 'Специалист Д3'],
 };
 const AGES: Record<Direction, string[]> = {
   adult: ['18-34', '35-54', '55+'],
@@ -23,7 +23,7 @@ const AGES: Record<Direction, string[]> = {
 const CAPITALS = ['Москва', 'Санкт-Петербург'];
 const REGIONS = ['Самара', 'Уфа', 'Иркутск', 'Пермь', 'Томск', 'Казань', 'Краснодар', 'Новосибирск', 'Подольск (МО)', 'Воронеж'];
 const PROJECTS: [string, number][] = [['Абсолют-Помощь', 0.35], ['Другие гранты', 0.25], ['Без проекта', 0.4]];
-const REASONS: [string, number][] = [['Курс закончен', 0.6], ['Прекратил(а) сам(а)', 0.3], ['Перенаправлен(а)', 0.1]];
+const REASONS: [string, number][] = [['Курс закончен', 0.6], ['Клиент прекратил работу', 0.3], ['Перенаправлен к другому специалисту', 0.1]];
 
 export const DEMO_CUTOFF = '2026-10-31';
 

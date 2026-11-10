@@ -19,7 +19,7 @@ export async function exportReport(ds: Dataset, f: Filters): Promise<Blob> {
   ];
 
   const specs = [
-    head('Специалистка', 'Клиентов в работе', 'Клиентов за период', 'Консультаций', 'Часов', 'Отмен и неявок'),
+    head('Специалист', 'Клиентов в работе', 'Клиентов за период', 'Консультаций', 'Часов', 'Отмен и неявок'),
     ...bySpecialistTable(ds, f).map((s) => [s.specialist, s.inWork, s.clients, s.held, s.hours, s.cancelled]),
   ];
 
@@ -30,7 +30,7 @@ export async function exportReport(ds: Dataset, f: Filters): Promise<Blob> {
 
   const caseById = new Map(ds.cases.map((c) => [c.id, c]));
   const list = [
-    head('Дата', 'Код случая', 'Специалистка', 'Направление', 'Регион', 'Проект', 'Статус встречи', 'Часов'),
+    head('Дата', 'Код случая', 'Специалист', 'Направление', 'Регион', 'Проект', 'Статус встречи', 'Часов'),
     ...ds.meetings
       .filter((m) => m.date >= `${f.from}-01` && m.date <= `${f.to}-31`)
       .sort((a, b) => (a.date < b.date ? -1 : 1))
@@ -45,7 +45,7 @@ export async function exportReport(ds: Dataset, f: Filters): Promise<Blob> {
 
   return writeExcelFile([
     { data: months, sheet: 'По месяцам' },
-    { data: specs, sheet: 'По специалисткам' },
+    { data: specs, sheet: 'По специалистам' },
     { data: reasons, sheet: 'Причины завершения' },
     { data: list, sheet: 'Консультации' },
   ]).toBlob();

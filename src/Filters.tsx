@@ -10,9 +10,10 @@ interface Props {
   range: { from: string; to: string };
   specialists: string[];
   projects: string[];
+  lockSpecialist?: boolean;
 }
 
-export default function Filters({ value, onChange, range, specialists, projects }: Props) {
+export default function Filters({ value, onChange, range, specialists, projects, lockSpecialist }: Props) {
   const months = monthsBetween(range.from, range.to).map((m) => ({ value: m, label: monthLabel(m) }));
   const set = (patch: Partial<F>) => {
     const next = { ...value, ...patch };
@@ -33,7 +34,8 @@ export default function Filters({ value, onChange, range, specialists, projects 
         options={[{ value: 'all', label: 'Все' }, ...(['adult', 'detrod'] as const).map((d) => ({ value: d, label: DIRECTION_LABEL[d] }))]}
       />
       <Select
-        label="Специалистка"
+        label="Специалист"
+        disabled={lockSpecialist}
         value={value.specialist}
         onChange={(v) => set({ specialist: v })}
         options={[{ value: 'all', label: 'Все' }, ...specialists.map((s) => ({ value: s, label: s }))]}

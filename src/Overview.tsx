@@ -11,7 +11,7 @@ export default function Overview({ ds, f }: { ds: Dataset; f: Filters }) {
   const reasons = closeReasons(ds, f);
   const bars = [
     { name: 'Новые обращения', color: '#6063a6', values: rows.map((r) => r.requests) },
-    { name: 'Передано специалисткам', color: '#d98b99', values: rows.map((r) => r.assigned) },
+    { name: 'Передано специалистам', color: '#d98b99', values: rows.map((r) => r.assigned) },
   ];
   const line = [{ name: 'В очереди на конец месяца', color: '#1c5358', values: rows.map((r) => r.queueEnd) }];
   const held = [{ name: 'Консультаций проведено', color: '#6063a6', values: rows.map((r) => r.held) }];
@@ -27,8 +27,8 @@ export default function Overview({ ds, f }: { ds: Dataset; f: Filters }) {
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 xl:grid-cols-6">
         <Kpi label="Новые обращения" value={fmt(total.requests)} sub={`взрослых ${fmt(total.requestsAdult)}, детрод ${fmt(total.requestsDetrod)}`} />
-        <Kpi tone="rose" label="Передано специалисткам" value={fmt(total.assigned)} sub={`из регионов ${fmt(total.assignedRegional)}`} />
-        <Kpi tone="teal" label="В очереди на конец периода" value={fmt(total.queueEnd)} sub="специалистка ещё не назначена" />
+        <Kpi tone="rose" label="Передано специалистам" value={fmt(total.assigned)} sub={`из регионов ${fmt(total.assignedRegional)}`} />
+        <Kpi tone="teal" label="В очереди на конец периода" value={fmt(total.queueEnd)} sub="специалист ещё не назначен" />
         <Kpi label="Консультаций проведено" value={fmt(total.held)} sub={`из них детрод ${fmt(total.heldDetrod)}, часов ${fmt(total.hours, 1)}`} />
         <Kpi tone="rose" label="Уникальных клиентов" value={fmt(total.clients)} sub="каждый человек считается один раз" />
         <Kpi tone="sand" label="Среднее ожидание" value={total.avgWaitDays === null ? '—' : `${fmt(total.avgWaitDays)} дн.`} sub="от обращения до назначения" />
@@ -39,7 +39,7 @@ export default function Overview({ ds, f }: { ds: Dataset; f: Filters }) {
           <Legend series={bars} />
           <BarChart months={months} series={bars} />
         </Card>
-        <Card title="Очередь на конец месяца" hint="Принятые обращения, по которым специалистка ещё не назначена.">
+        <Card title="Очередь на конец месяца" hint="Принятые обращения, по которым специалист ещё не назначен.">
           <Legend series={line} />
           <LineChart months={months} series={line} />
         </Card>

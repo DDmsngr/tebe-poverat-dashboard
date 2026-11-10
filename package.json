@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "test": "node --test src/metrics.test.ts"
+    "test": "node --test src/metrics.test.ts src/crm.test.ts"
   },
   "dependencies": {
     "lucide-react": "^1.71.0",
