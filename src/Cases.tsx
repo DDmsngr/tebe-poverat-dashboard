@@ -68,14 +68,16 @@ export default function Cases({ ds, role, onChange }: Props) {
     <div className="space-y-5">
       <div className="flex justify-center py-1">
         {role.kind === 'admin' ? (
-          <Button size="lg" onClick={() => setCreating(true)}>
-            <Plus size={20} /> Новое обращение
-          </Button>
+          <div data-tour="new-case" className="rounded-full">
+            <Button size="lg" onClick={() => setCreating(true)}>
+              <Plus size={20} /> Новое обращение
+            </Button>
+          </div>
         ) : (
           <p className="rounded-full bg-white px-5 py-2.5 text-sm text-ink/65">Здесь только ваши случаи. Откройте случай, чтобы отметить встречу.</p>
         )}
       </div>
-      <Card>
+      <Card data-tour="case-filters">
         <div className="flex flex-wrap items-end gap-3">
           <Select
             label="Статус"
@@ -119,10 +121,15 @@ export default function Cases({ ds, role, onChange }: Props) {
               </tr>
             </thead>
             <tbody>
-              {rows.slice(0, limit).map((c) => {
+              {rows.slice(0, limit).map((c, idx) => {
                 const lm = lastMeeting.get(c.id);
                 return (
-                  <tr key={c.id} onClick={() => setOpenId(c.id)} className="cursor-pointer border-b border-ink/5 hover:bg-sky/50">
+                  <tr
+                    key={c.id}
+                    data-tour={idx === 0 ? 'case-row' : undefined}
+                    onClick={() => setOpenId(c.id)}
+                    className="cursor-pointer border-b border-ink/5 hover:bg-sky/50"
+                  >
                     <td className="py-2 pr-3 font-medium text-brand-dark">{c.id}</td>
                     <td className="px-2"><Chip s={c.status} /></td>
                     <td className="px-2">{DIRECTION_LABEL[c.direction]}</td>

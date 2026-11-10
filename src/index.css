@@ -26,3 +26,25 @@ body {
 .num {
   font-variant-numeric: tabular-nums;
 }
+
+/* Подсветка элемента в онбординге: затемнение вокруг и пульсирующая рамка */
+.tour-spot {
+  box-shadow: 0 0 0 9999px rgba(25, 35, 46, 0.7), 0 0 0 3px #d98b99;
+  animation: tour-pulse 1.8s ease-out infinite;
+}
+@keyframes tour-pulse {
+  0% {
+    box-shadow: 0 0 0 9999px rgba(25, 35, 46, 0.7), 0 0 0 3px #d98b99, 0 0 0 3px rgba(217, 139, 153, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 9999px rgba(25, 35, 46, 0.7), 0 0 0 3px #d98b99, 0 0 0 16px rgba(217, 139, 153, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 9999px rgba(25, 35, 46, 0.7), 0 0 0 3px #d98b99, 0 0 0 3px rgba(217, 139, 153, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tour-spot {
+    animation: none;
+  }
+}

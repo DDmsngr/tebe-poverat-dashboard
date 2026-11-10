@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 
-export function Card({ title, hint, children, className = '' }: { title?: string; hint?: string; children: ReactNode; className?: string }) {
+export function Card({ title, hint, children, className = '', ...rest }: { title?: string; hint?: string; children: ReactNode; className?: string; 'data-tour'?: string }) {
   return (
-    <section className={`rounded-[20px] bg-white p-5 shadow-[0_1px_0_rgba(25,35,46,0.06)] ${className}`}>
+    <section data-tour={rest['data-tour']} className={`rounded-[20px] bg-white p-5 shadow-[0_1px_0_rgba(25,35,46,0.06)] ${className}`}>
       {title && (
         <div className="mb-3">
           <h2 className="text-lg font-semibold text-night">{title}</h2>

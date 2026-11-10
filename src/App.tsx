@@ -60,6 +60,13 @@ export default function App() {
     setDs(next);
   }
 
+  // Экскурсия показывает кнопки администратора, поэтому начинается с его роли и страницы случаев.
+  function openTour() {
+    setRole({ kind: 'admin' });
+    setTab('cases');
+    setTour(true);
+  }
+
   function changeRole(value: string) {
     const next: Role = value === 'admin' ? { kind: 'admin' } : { kind: 'specialist', name: value };
     setRole(next);
@@ -77,7 +84,7 @@ export default function App() {
             <div className="text-sm text-white/65">Учёт психологической помощи</div>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <label className="flex items-center gap-2 text-xs text-white/70">
+            <label data-tour="role" className="flex items-center gap-2 rounded-full text-xs text-white/70">
               Вы вошли как
               <select
                 value={role.kind === 'admin' ? 'admin' : role.name}
@@ -91,7 +98,8 @@ export default function App() {
               </select>
             </label>
             <button
-              onClick={() => setTour(true)}
+              data-tour="tour-btn"
+              onClick={openTour}
               className="inline-flex items-center gap-1.5 rounded-full border border-white/25 px-3 py-1.5 text-xs text-white/85 hover:bg-white/10"
             >
               <HelpCircle size={14} /> Как пользоваться
@@ -102,10 +110,11 @@ export default function App() {
             </span>
           </div>
         </div>
-        <nav className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-5">
+        <nav data-tour="tabs" className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-5">
           {visibleTabs.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
+              data-tour={`tab-${id}`}
               onClick={() => setTab(id)}
               className={`inline-flex items-center gap-2 rounded-t-2xl px-4 py-2.5 text-sm transition ${
                 tab === id ? 'bg-cream font-semibold text-night' : 'text-white/75 hover:text-white'
