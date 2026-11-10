@@ -48,18 +48,19 @@ export function Select<T extends string>({
 }
 
 export function Button({
-  children, onClick, variant = 'primary', disabled, title,
-}: { children: ReactNode; onClick?: () => void; variant?: 'primary' | 'ghost'; disabled?: boolean; title?: string }) {
+  children, onClick, variant = 'primary', disabled, title, size = 'md',
+}: { children: ReactNode; onClick?: () => void; variant?: 'primary' | 'ghost'; disabled?: boolean; title?: string; size?: 'md' | 'lg' }) {
   const style =
     variant === 'primary'
       ? 'bg-brand text-white hover:bg-brand-dark'
       : 'border border-brand/30 text-brand hover:bg-brand/5';
+  const dims = size === 'lg' ? 'px-9 py-4 text-base shadow-[0_6px_18px_rgba(96,99,166,0.35)]' : 'px-5 py-2.5 text-sm';
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       title={title}
-      className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-45 ${style}`}
+      className={`inline-flex items-center gap-2 rounded-full font-medium transition disabled:cursor-not-allowed disabled:opacity-45 ${dims} ${style}`}
     >
       {children}
     </button>

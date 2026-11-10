@@ -66,6 +66,15 @@ export default function Cases({ ds, role, onChange }: Props) {
 
   return (
     <div className="space-y-5">
+      <div className="flex justify-center py-1">
+        {role.kind === 'admin' ? (
+          <Button size="lg" onClick={() => setCreating(true)}>
+            <Plus size={20} /> Новое обращение
+          </Button>
+        ) : (
+          <p className="rounded-full bg-white px-5 py-2.5 text-sm text-ink/65">Здесь только ваши случаи. Откройте случай, чтобы отметить встречу.</p>
+        )}
+      </div>
       <Card>
         <div className="flex flex-wrap items-end gap-3">
           <Select
@@ -90,15 +99,6 @@ export default function Cases({ ds, role, onChange }: Props) {
             Код случая или клиента
             <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="C-0123" className={field} />
           </label>
-          <div className="ml-auto">
-            {role.kind === 'admin' ? (
-              <Button onClick={() => setCreating(true)}>
-                <Plus size={16} /> Новое обращение
-              </Button>
-            ) : (
-              <span className="text-xs text-ink/55">Психолог видит только свои случаи</span>
-            )}
-          </div>
         </div>
       </Card>
 

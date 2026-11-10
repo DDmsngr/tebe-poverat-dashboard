@@ -10,12 +10,13 @@ import Specialists from './Specialists.tsx';
 import Cases from './Cases.tsx';
 import DataPanel from './DataPanel.tsx';
 import Help from './Help.tsx';
+import Onboarding, { onboardingSeen } from './Onboarding.tsx';
 
 type Tab = 'overview' | 'cases' | 'specialists' | 'data' | 'help';
 
 const TABS: { id: Tab; label: string; icon: typeof BarChart3; adminOnly?: boolean }[] = [
-  { id: 'overview', label: 'Обзор', icon: BarChart3 },
   { id: 'cases', label: 'Случаи', icon: ClipboardList },
+  { id: 'overview', label: 'Обзор', icon: BarChart3 },
   { id: 'specialists', label: 'Специалисты', icon: Users, adminOnly: true },
   { id: 'data', label: 'Данные', icon: Database, adminOnly: true },
   { id: 'help', label: 'Как считаем', icon: HelpCircle },
@@ -30,8 +31,9 @@ function defaultFilters(ds: Dataset): F {
 export default function App() {
   const [ds, setDs] = useState<Dataset>(() => loadDataset());
   const [f, setF] = useState<F>(() => defaultFilters(ds));
-  const [tab, setTab] = useState<Tab>('overview');
+  const [tab, setTab] = useState<Tab>('cases');
   const [role, setRole] = useState<Role>({ kind: 'admin' });
+  const [tour, setTour] = useState(() => !onboardingSeen());
 
   const range = useMemo(() => {
     const r = dataRange(ds);
@@ -48,7 +50,7 @@ export default function App() {
     saveDataset(next);
     setDs(next);
     setF(defaultFilters(next));
-    setTab('overview');
+    setTab('cases');
     setRole({ kind: 'admin' });
   }
 
@@ -61,7 +63,7 @@ export default function App() {
   function changeRole(value: string) {
     const next: Role = value === 'admin' ? { kind: 'admin' } : { kind: 'specialist', name: value };
     setRole(next);
-    if (next.kind === 'specialist' && (tab === 'specialists' || tab === 'data')) setTab('overview');
+    if (next.kind === 'specialist' && (tab === 'specialists' || tab === 'data')) setTab('cases');
   }
 
   return (
@@ -88,6 +90,12 @@ export default function App() {
                 ))}
               </select>
             </label>
+            <button
+              onClick={() => setTour(true)}
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/25 px-3 py-1.5 text-xs text-white/85 hover:bg-white/10"
+            >
+              <HelpCircle size={14} /> Как пользоваться
+            </button>
             <span className="rounded-full bg-white/10 px-4 py-1.5 text-xs text-white/80">
               Прототип. {ds.source === 'demo' ? 'Данные вымышлены' : 'Данные из загруженного файла'}
               {ds.edited ? ', есть правки' : ''}
@@ -120,6 +128,8 @@ export default function App() {
         {tab === 'data' && <DataPanel ds={ds} f={effective} onData={setData} />}
         {tab === 'help' && <Help />}
       </main>
+
+      {tour && <Onboarding onClose={() => setTour(false)} />}
 
       <footer className="mx-auto max-w-7xl px-5 pb-8 text-xs text-ink/50">
         Прототип для согласования показателей. Реальных данных клиентов здесь нет. Изменения сохраняются в этом браузере, в рабочей версии они пойдут в Битрикс24.
